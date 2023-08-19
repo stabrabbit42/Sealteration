@@ -6,8 +6,7 @@ import PostContainer from './PostContainer.jsx'
 
 const UserContainer = () => {
   return (
-    <div>
-    <h3>User Container</h3>
+    <div id="userContainer">
     <UserDetails />
     <PostContainer />
     </div>
