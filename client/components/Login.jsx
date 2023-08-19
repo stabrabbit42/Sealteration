@@ -1,18 +1,20 @@
 import React from 'react';
 import { Box, TextField, Button, Link } from '@mui/material';
 
-// handle login function
-/*
-const handleLogin = () => {
-  // fetch request to backend 
-    // pass user and password
-    // if response.ok 
-      // modify login state --->> this will redirect (react-router on App component) from the login page to main container 
-    // else 
-      // display error logging in message using conditional rendering
-}
- */
 const Login = (props) => {
+  const { logIn } = props;
+  // handle login function
+  const handleLogin = () => {
+    // fetch request to backend
+    // pass user and password
+    // if response.ok
+    // modify login state --->> this will redirect (react-router on App component) from the login page to main container
+    // else
+    // display error logging in message using conditional rendering
+
+    // for now - click button and login - no auth
+    logIn(true);
+  };
   return (
     <div id="login">
       <Box
@@ -51,6 +53,7 @@ const Login = (props) => {
           variant="contained"
           fullWidth="true"
           sx={{ textTransform: 'none' }}
+          onClick={() => handleLogin()}
         >
           Sign in
         </Button>
