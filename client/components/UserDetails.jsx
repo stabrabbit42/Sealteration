@@ -2,10 +2,10 @@ import React from 'react';
 import { Container } from '@mui/material';
 
 const UserDetails = (props) => {
-  const { display_name, age, location, job, education, interests } = props.data;
+  // const { display_name, age, location, job, education, interests } = props.data;
 
   return (
-    <div id='user'>
+    <div id="user">
       <Container
         sx={{
           display: 'flex',
@@ -23,15 +23,15 @@ const UserDetails = (props) => {
           p: 3,
         }}
       >
-        <div className='userHeadContainer'>
-          <h3 className='userDisplayName'>{display_name}</h3>
+        <div className="userHeadContainer">
+          <h3 className="userDisplayName">Display Name: </h3>
         </div>
-        <ul className='userDetailsList'>
-          <li className='userDetail'>Age: {age}</li>
-          <li className='userDetail'>Location: {location}</li>
-          <li className='userDetail'>Job: {job}</li>
-          <li className='userDetail'>Education: {education}</li>
-          <li className='userDetail'>Interests: {interests}</li>
+        <ul className="userDetailsList">
+          <li className="userDetail">Age: </li>
+          <li className="userDetail">Location: </li>
+          <li className="userDetail">Job: </li>
+          <li className="userDetail">Education: </li>
+          <li className="userDetail">Interests: </li>
         </ul>
       </Container>
     </div>
