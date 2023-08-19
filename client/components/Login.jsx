@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, TextField, Button, Link } from '@mui/material';
 
-
 // handle login function
 /*
 const handleLogin = () => {
@@ -27,15 +26,27 @@ const Login = (props) => {
           bgcolor: 'white',
           border: '1px solid lightgray',
           borderRadius: '10px',
-          boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          boxShadow:
+            '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
           height: '60%',
-          width: "30%",
+          width: '30%',
           p: 3,
         }}
       >
         <h1>Welcome!</h1>
-        <TextField variant="outlined" label="Username" size="large" fullWidth="true"></TextField>
-        <TextField variant="outlined" label="Password" size="large" fullWidth="true"></TextField>
+        <TextField
+          variant="outlined"
+          label="Username"
+          size="large"
+          fullWidth="true"
+        ></TextField>
+        <TextField
+          variant="outlined"
+          label="Password"
+          size="large"
+          fullWidth="true"
+          type="password"
+        ></TextField>
         <Button
           variant="contained"
           fullWidth="true"
@@ -50,7 +61,9 @@ const Login = (props) => {
         >
           Sign in with Google
         </Button>
-        <p>New User? <Link href="x">Create Account</Link></p>
+        <p>
+          New User? <Link href="x">Create Account</Link>
+        </p>
       </Box>
     </div>
   );
