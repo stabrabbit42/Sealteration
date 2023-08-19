@@ -2,11 +2,51 @@ const db = require('../db/database');
 
 const socialControllers = {};
 
-socialControllers.login = async (req, res, next) => {}
-//query for user and password, authenticate; set cookies
+socialControllers.signup = async (req, res, next) => {
+  const { email, password } = req.body;
+  const query = `SELECT * FROM public.users WHERE email = '${email}'`;
+  try {
+    const result = await db.query(query);
 
-socialControllers.signup = async (req, res, next) => {}
-//query for user and password, authenticate; set cookies
+    if (result.rows.length > 0) {
+      
+    }
+    const insertQuery = `INSERT INTO public.users (email, password) VALUES ('${email}', '${password}') RETURNING user_id`;
+  }
+
+}
+    //query database to see if email exists
+        //if not, create a new user in DB
+         //if so, redirect them to login authenticate; set cookies
+
+socialControllers.login = async (req, res, next) => {
+//query for user and password, authenticate;
+const { email, password } = req.body;
+const query = `SELECT s.email, s.password FROM public.users s WHERE s.email=${email} s.password=${password}`
+try{
+    const user=await db.query(query);
+    if (user.length===0){
+        //redirect to signup
+    }
+    
+}
+}
+
+
+socialControllers.startSession = async (req, res, next) => {
+//set cookies
+try{
+    const {userId} = res.locals
+    await res.cookie("ssid", userId);
+    return next();
+}catch (err)
+    return next({
+    log: `An error occured in setSSIDCookie ${err}`,
+    status: 500
+    message: { err: "internal server error" },
+    });
+}
+
 
 socialControllers.isLoggedIn = async (req, res, next) => {}
 //check for cookies
