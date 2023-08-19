@@ -9,14 +9,14 @@ import MainContainer from './containers/MainContainer.jsx';
 // useState or redux
 
 const App = () => {
-  const [isLoggedIn, logIn] = useState(false);
+  const [isLoggedIn, logIn] = useState(true);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
-          element={isLoggedIn ? <MainContainer /> : <Login logIn={logIn} />}
+          element={isLoggedIn ? <MainContainer logIn={logIn}/> : <Login logIn={logIn} />}
         />
         {/* <MainContainer /> */}
       </Routes>
