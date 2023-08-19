@@ -34,7 +34,7 @@ module.exports = {
   ],
   devServer: {
     proxy: {
-      '/api': {
+      '/accounts': {
         target: 'http://localhost:3000',
         router: () => 'http://localhost:8080',
       },

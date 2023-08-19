@@ -2,16 +2,31 @@ const db = require('../db/database');
 
 const socialControllers = {};
 
+// signup middleware
 socialControllers.signup = async (req, res, next) => {
   const { email, password } = req.body;
-  const query = `SELECT * FROM public.users WHERE email = '${email}'`;
   try {
+    const query = `SELECT * FROM public.users WHERE email = '${email}'`;
     const result = await db.query(query);
-
     if (result.rows.length > 0) {
-      
+      console.log('same profile name')
+      return next({
+        log: 'An error occurred signing up with existing email',
+        status: 400,
+        message: { err: 'Email already exists' }
+      })
     }
     const insertQuery = `INSERT INTO public.users (email, password) VALUES ('${email}', '${password}') RETURNING user_id`;
+    const insertedUser = await db.query(insertQuery);
+    console.log('user_id: ', insertedUser.rows[0])
+    res.locals.userId = insertedUser.rows[0];
+    return next();
+  } catch(error) {
+    return next({
+      log: 'An error occurred signing up',
+      status: 500,
+      message: { err: 'Internal server error' }
+    })
   }
 
 }
@@ -22,14 +37,22 @@ socialControllers.signup = async (req, res, next) => {
 socialControllers.login = async (req, res, next) => {
 //query for user and password, authenticate;
 const { email, password } = req.body;
-const query = `SELECT s.email, s.password FROM public.users s WHERE s.email=${email} s.password=${password}`
+const query = `SELECT s.email, s.password FROM public.users s WHERE s.email=${email} s.password=${password} RETURNING user_id`
 try{
     const user=await db.query(query);
-    if (user.length===0){
-        //redirect to signup
+    if (user.rows.length===0){
+      return next({
+        log: 'Invalid Username or Password',
+        status: 401,
+        message: { err: 'Invalid Username or Password' }
+      })
+    }else{
+      res.locals.userId = user.rows[0]
     }
     
-}
+  }catch{
+
+  }
 }
 
 
@@ -39,12 +62,13 @@ try{
     const {userId} = res.locals
     await res.cookie("ssid", userId);
     return next();
-}catch (err)
+}catch (err){
     return next({
     log: `An error occured in setSSIDCookie ${err}`,
-    status: 500
+    status: 500,
     message: { err: "internal server error" },
     });
+}
 }
 
 
