@@ -4,11 +4,11 @@ import NavBar from '../components/NavBar.jsx'
 // import usercontainer
 import UserContainer from './UserContainer.jsx'
 
-const MainContainer = () => {
+const MainContainer = (props) => {
+  const { logIn } = props;
   return (
-    <div>
-      <h2>Main Container</h2>
-      <NavBar />
+    <div id="mainContainer">
+      <NavBar logIn={logIn}/>
       <UserContainer />
     </div>
   )

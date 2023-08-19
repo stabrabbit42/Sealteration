@@ -4,10 +4,20 @@
   font-family: 'Roboto', sans-serif;
 }
 
+body {
+  margin: 0px;
+}
+
 #login {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+#mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
