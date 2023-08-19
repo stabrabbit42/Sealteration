@@ -51,6 +51,6 @@ CREATE TABLE public.imagePost (
 
 
 
-ALTER TABLE public.people ADD CONSTRAINT "people_fk0" FOREIGN KEY ("species_id") REFERENCES  public.species("_id");
+ALTER TABLE public.users ADD CONSTRAINT "users_fk0" FOREIGN KEY ("species_id") REFERENCES  public.species("_id");
 ALTER TABLE public.people ADD CONSTRAINT "people_fk1" FOREIGN KEY ("homeworld_id") REFERENCES  public.planets("_id");
 
