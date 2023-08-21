@@ -5,8 +5,9 @@ import UserPost from '../components/UserPost.jsx';
 
 const PostContainer = () => {
   return (
-    <div>
-      <h4>Post Container</h4>
+    <div id="postContainer">
+      <UserPost />
+      <UserPost />
       <UserPost />
     </div>
   )
