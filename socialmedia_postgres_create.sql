@@ -11,6 +11,7 @@ CREATE TABLE public.users (
   "user_id" serial NOT NULL,
   "email" varchar NOT NULL,
   "password" varchar NOT NULL,
+  "hash_id" varchar,
   "display_name" varchar,
   "interests" varchar,
   "age" integer,
@@ -21,8 +22,6 @@ CREATE TABLE public.users (
 ) WITH (
   OIDS=FALSE
 );
-
-
 
 CREATE TABLE  public.textPost (
   "post_id" serial NOT NULL,

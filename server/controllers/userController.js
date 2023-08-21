@@ -43,7 +43,7 @@ userController.signup = async (req, res, next) => {
 
         // set JWT cookie
         res.cookie('jwt', token, {
-          maxAge: 1* 24 * 60 * 60,
+          maxAge: 1 * 24 * 60 * 60,
           httpOnly: true
         });
 
@@ -75,7 +75,7 @@ userController.login = async (req, res, next) => {
    const { email, password } = req.body;
    // TODO: add some validation/sanitization of email here
    // hash password with bcrypt
-   password =  await bcrypt.hash(password, WORKFACTOR)
+   password =  await bcrypt.hash(password, WORKFACTOR);
 
     // query to check if this email-hash combo is correct
     const selectString = `SELECT email FROM user WHERE email = ${email} AND password = ${password};`;
