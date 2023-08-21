@@ -33,10 +33,15 @@ module.exports = {
     }),
   ],
   devServer: {
+    host: 'localhost',
+    port: 8080,
+    hot: true,
     proxy: {
       '/accounts': {
-        target: 'http://localhost:3000',
-        router: () => 'http://localhost:8080',
+        target: 'http://localhost:8080',
+        router: () => 'http://localhost:3000',
+        //pathRewrite: { '^/accounts': '' },
+        secure: false,
       },
     },
   },
