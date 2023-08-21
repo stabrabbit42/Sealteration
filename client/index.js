@@ -11,6 +11,7 @@ import { render } from 'react-dom';
 import './styles.css';
 //import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+// import 'dotenv/config';
 
 render(
   // <BrowserRouter>

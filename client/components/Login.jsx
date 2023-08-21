@@ -19,17 +19,20 @@ const Login = (props) => {
         password,
       }),
     })
-      .then(() => console.log('here'))
       // modify state (in APP) to set isLoggedIn to true
       .then((response) => {
-        console.log('response ok');
-        logIn(true);
+        console.log(response)
+        if (response.ok) {
+          logIn(true);
+        }
       })
       // errors
       .catch((err) => {
         console.log(err);
       });
   };
+
+
 
   return (
     <div id="login">
