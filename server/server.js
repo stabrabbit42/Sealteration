@@ -3,7 +3,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 
 const app = express();
-const port = process.env.PORT || 3000;;
+const port = process.env.PORT || 3000;
 const socialRouter = require('./routers/routes.js');
 
 app.use(express.json());
@@ -16,11 +16,12 @@ if (process.env.NODE_ENV === 'production') {
     return res.status(200).sendFile(path.join(__dirname, '../client'));
   });
 }
-app.use('/accounts', socialRouter);
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
+
+app.use('/accounts', socialRouter);
 
 // catch-all route handler for any requests to an unknown route
 app.use('*', (req, res) => res.status(404).send('This is an incorrect URL'));
@@ -36,6 +37,7 @@ app.use((err, req, res, next) => {
   console.log(errorObj.log);
   return res.status(errorObj.status).json(errorObj.message);
 });
+
 
 module.exports = app.listen(port, () =>
   console.log(`Listening on port ${port}`)
