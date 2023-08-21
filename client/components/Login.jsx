@@ -1,20 +1,36 @@
 import React from 'react';
+import { useState } from 'react';
 import { Box, TextField, Button, Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Login = (props) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const { logIn } = props;
   // handle login function
   const handleLogin = () => {
-    // fetch request to backend
-    // pass user and password
-    // if response.ok
-    // modify login state --->> this will redirect (react-router on App component) from the login page to main container
-    // else
-    // display error logging in message using conditional rendering
-
-    // for now - click button and login - no auth
-    logIn(true);
+    console.log(email, password);
+    fetch('../accounts/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then(() => console.log('here'))
+      // modify state (in APP) to set isLoggedIn to true
+      .then((response) => {
+        console.log('response ok');
+        logIn(true);
+      })
+      // errors
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
   return (
     <div id="login">
       <Box
@@ -38,9 +54,11 @@ const Login = (props) => {
         <h1>Welcome!</h1>
         <TextField
           variant="outlined"
-          label="Username"
+          label="Email"
           size="large"
           fullWidth="true"
+          type="text"
+          onChange={(e) => setEmail(e.target.value)}
         ></TextField>
         <TextField
           variant="outlined"
@@ -48,6 +66,7 @@ const Login = (props) => {
           size="large"
           fullWidth="true"
           type="password"
+          onChange={(e) => setPassword(e.target.value)}
         ></TextField>
         <Button
           variant="contained"
@@ -65,7 +84,7 @@ const Login = (props) => {
           Sign in with Google
         </Button>
         <p>
-          New User? <Link href="x">Create Account</Link>
+          New User? <RouterLink to="/signup">Create Account</RouterLink>
         </p>
       </Box>
     </div>
