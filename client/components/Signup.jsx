@@ -1,17 +1,15 @@
 import React from 'react';
-import { useState } from 'react';
 import { Box, TextField, Button, Link } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const Login = (props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+const Signup = (props) => {
   const { logIn } = props;
-  // handle login function
-  const handleLogin = () => {
-    console.log(email, password);
-    fetch('../accounts/login', {
+  const navigate = useNavigate();
+
+  // handle signUp function
+  const handleSignup = () => {
+    e.preventDefault();
+    fetch('./accounts/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -19,17 +17,20 @@ const Login = (props) => {
         password,
       }),
     })
-      .then(() => console.log('here'))
-      // modify state (in APP) to set isLoggedIn to true
+      // modify state (in APP) to set isLoggedIn to true and navigate to home page
       .then((response) => {
-        console.log('response ok');
-        logIn(true);
+        if (response.ok) {
+          console.log('successfully signup')
+          logIn(true);
+          navigate('/');
+        } 
       })
       // errors
       .catch((err) => {
         console.log(err);
       });
   };
+
 
   return (
     <div id="login">
@@ -57,8 +58,6 @@ const Login = (props) => {
           label="Email"
           size="large"
           fullWidth="true"
-          type="text"
-          onChange={(e) => setEmail(e.target.value)}
         ></TextField>
         <TextField
           variant="outlined"
@@ -66,29 +65,18 @@ const Login = (props) => {
           size="large"
           fullWidth="true"
           type="password"
-          onChange={(e) => setPassword(e.target.value)}
         ></TextField>
         <Button
           variant="contained"
           fullWidth="true"
           sx={{ textTransform: 'none' }}
-          onClick={() => handleLogin()}
+          onClick={() => handleSignup()}
         >
-          Sign in
+          Sign Up
         </Button>
-        <Button
-          variant="outlined"
-          fullWidth="true"
-          sx={{ textTransform: 'none' }}
-        >
-          Sign in with Google
-        </Button>
-        <p>
-          New User? <RouterLink to="/signup">Create Account</RouterLink>
-        </p>
       </Box>
     </div>
   );
 };
 
-export default Login;
+export default Signup;
