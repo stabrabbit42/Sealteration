@@ -36,11 +36,11 @@ module.exports = {
     proxy: {
       '/accounts': {
         target: 'http://localhost:3000',
-        router: () => 'http://localhost:8080',
+        secure: false
       },
     },
   },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-};
+}

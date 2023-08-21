@@ -9,8 +9,7 @@ router.post('/signup', socialControllers.signup, (req, res) => {
     // .redirect("/home"); 
 });
 router.post('/login', socialControllers.login, socialControllers.startSession, (req, res) => {
-    const {id} = res.locals;
-    return res.status(302).redirect(`GET /:${id}`); 
+
 });
 //user's homepage has the ID of server info stored as type
 router.get('/:id', socialControllers.isLoggedIn, socialControllers.pageDetails, (req, res) => {
