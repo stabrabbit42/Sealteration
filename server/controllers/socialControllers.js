@@ -28,11 +28,24 @@ socialControllers.signup = async (req, res, next) => {
       message: { err: 'Internal server error' }
     })
   }
-
 }
-    //query database to see if email exists
-        //if not, create a new user in DB
-         //if so, redirect them to login authenticate; set cookies
+
+socialControllers.textpost = async (req, res, next) => {
+  const { content, user_id } = req.body;
+  try {
+    const insertQuery = `INSERT INTO public.textPost (user_id, content) VALUES ('${user_id}', '${content}')`;
+    const contentAll = `Select * FROM public.textPost WHERE user_id ='${user_id}'`;
+    const content = await db.query(contentAll);
+    res.locals.content=content.rows;
+  }catch(error) {
+    return next({
+      log: 'An error occurred while posting content',
+      status: 500,
+      message: { err: 'Internal server error - unable to post content' }
+    })
+  }
+}
+
 
 socialControllers.login = async (req, res, next) => {
 //query for user and password, authenticate;

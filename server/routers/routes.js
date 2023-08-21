@@ -13,6 +13,10 @@ router.post('/login', socialControllers.login, socialControllers.startSession, (
 });
 //user's homepage has the ID of server info stored as type
 router.post('/:id', (req, res) => {
+  //need to hash ID for this
+});
+
+router.post('/', (req, res) => {
   
 });
 
