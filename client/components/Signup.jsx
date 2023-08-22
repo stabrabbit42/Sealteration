@@ -7,7 +7,7 @@ const Signup = (props) => {
   const navigate = useNavigate();
 
   // handle signUp function
-  const handleSignup = () => {
+  const handleSignup = (e) => {
     e.preventDefault();
     fetch('./accounts/signup', {
       method: 'POST',
@@ -70,7 +70,8 @@ const Signup = (props) => {
           variant="contained"
           fullWidth="true"
           sx={{ textTransform: 'none' }}
-          onClick={() => handleSignup()}
+          onClick={handleSignup} // Is this how we want this formatted?
+          // Research how MUI sends this form data to handleSignup callback
         >
           Sign Up
         </Button>

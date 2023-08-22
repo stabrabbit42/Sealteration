@@ -11,6 +11,7 @@ socialControllers.signup = async (req, res, next) => {
   const { email, password } = req.body;
   const hpassword = await bcrypt.hash(password, WORKFACTOR);
   try {
+    // Perhaps do not need to use * in selector, consider changing to email
     const query = `SELECT * FROM public.users WHERE email = '${email}'`;
     const result = await db.query(query);
 
@@ -22,12 +23,13 @@ socialControllers.signup = async (req, res, next) => {
       });
     }
 
+    // password in database IS the hashed password
     const insertQuery = `INSERT INTO public.users (email, password) VALUES ('${email}', '${hpassword}') RETURNING user_id`;
     const insertedUser = await db.query(insertQuery);
-    let id = insertedUser.rows[0].user_id.toString();
+    let id = insertedUser.rows[0].user_id.toString(); // {rows: [{user_id: 2093}]} => '2093'
     const hashID = await bcrypt.hash(id, WORKFACTOR);
     const idQuery = `UPDATE public.users SET hash_id = '${hashID}' WHERE user_id = '${id}'`;
-    const idInsert = await db.query(idQuery);
+    const idInsert = await db.query(idQuery); // Why isn't this used? Why are we storing it?
     res.locals.id = hashID;
     return next();
   } catch (error) {
@@ -119,13 +121,13 @@ socialControllers.startSession = async (req, res, next) => {
   //set cookies
   try {
     const token = jwt.sign({ email: req.body.email }, authKey, {
-      expiresIn: 1 * 24 * 60 * 60 * 1000,
+      expiresIn: 1 * 24 * 60 * 60 * 1000, // Expires in one day // 86400000
     });
 
     console.log('inside try of startSession')
     res.cookie('cookie', 'hi');
-   const cookieResponse = res.cookie('jwt', token, {
-      maxAge: 1 * 24 * 60 * 60,
+   const cookieResponse = res.cookie('jwt', token, { // Doesn't need to be stored in a variable
+      maxAge: 1 * 24 * 60 * 60, // 1 day
       httpOnly: true,
     });
     console.log('past cookie setter');
