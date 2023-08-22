@@ -59,7 +59,7 @@ const Login = (props) => {
           variant="outlined"
           label="Email"
           size="large"
-          fullWidth="true"
+          fullWidth={true}
           type="text"
           onChange={(e) => setEmail(e.target.value)}
         ></TextField>
@@ -67,13 +67,13 @@ const Login = (props) => {
           variant="outlined"
           label="Password"
           size="large"
-          fullWidth="true"
+          fullWidth={true}
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         ></TextField>
         <Button
           variant="contained"
-          fullWidth="true"
+          fullWidth={true}
           sx={{ textTransform: 'none' }}
           onClick={() => handleLogin()}
         >
@@ -81,7 +81,7 @@ const Login = (props) => {
         </Button>
         <Button
           variant="outlined"
-          fullWidth="true"
+          fullWidth={true}
           sx={{ textTransform: 'none' }}
         >
           Sign in with Google

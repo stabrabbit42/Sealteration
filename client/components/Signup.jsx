@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, TextField, Button, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Signup = (props) => {
   const { logIn } = props;
   const navigate = useNavigate();
+
+  const [email, updateEmail] = useState('');
+  const [password, updatePassword] = useState('');
 
   // handle signUp function
   const handleSignup = (e) => {
@@ -57,18 +60,20 @@ const Signup = (props) => {
           variant="outlined"
           label="Email"
           size="large"
-          fullWidth="true"
+          fullWidth={true}
+          onChange={(e) => updateEmail(e.target.value)}
         ></TextField>
         <TextField
           variant="outlined"
           label="Password"
           size="large"
-          fullWidth="true"
+          fullWidth={true}
           type="password"
+          onChange={(e) => updatePassword(e.target.value)}
         ></TextField>
         <Button
           variant="contained"
-          fullWidth="true"
+          fullWidth={true}
           sx={{ textTransform: 'none' }}
           onClick={handleSignup} // Is this how we want this formatted?
           // Research how MUI sends this form data to handleSignup callback
