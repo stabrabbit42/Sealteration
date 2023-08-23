@@ -26,7 +26,7 @@ const Signup = (props) => {
           console.log(response.body);
           logIn(false); // If you want immediate login on signup, change to true
           navigate('/');
-        } 
+        }
       })
       // errors
       .catch((err) => {

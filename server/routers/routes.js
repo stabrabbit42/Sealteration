@@ -17,10 +17,12 @@ router.post('/login', socialControllers.login, socialControllers.startSession, (
     // return res.status(302).redirect(`GET /:${id}`);
 });
 //user's homepage has the ID of server info stored as type
-router.get('/:id', socialControllers.isLoggedIn, socialControllers.pageDetails, (req, res) => {
-  const {profile} = res.locals;
+router.get('/', socialControllers.isLoggedIn, socialControllers.pageDetails, (req, res) => {
+  const { profile } = res.locals;
+  console.log('through all the middleware')
   return res.status(200).send(profile);
 });
+
 
 router.post('/:id/post', socialControllers.isLoggedIn, socialControllers.textpost, (req, res) => {
   const {content} = res.locals;
