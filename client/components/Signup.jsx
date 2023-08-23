@@ -9,6 +9,8 @@ const Signup = (props) => {
   const [email, updateEmail] = useState('');
   const [password, updatePassword] = useState('');
 
+  const [signupError, updateSignupError] = useState('');
+
   // handle signUp function
   const handleSignup = (e) => {
     e.preventDefault();
@@ -26,7 +28,9 @@ const Signup = (props) => {
           console.log(response.body);
           logIn(false); // If you want immediate login on signup, change to true
           navigate('/');
-        } 
+        } else {
+          alert('An account with that username already exists!');
+        }
       })
       // errors
       .catch((err) => {

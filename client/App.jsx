@@ -16,6 +16,24 @@ const App = () => {
   // UseEffect to check state of login on app startup
   // Needs to make a call to the backend to see if cookie is valid
 
+  // send GET request to /accounts/ (contains a jwt cookie)
+  // receives a {profile} key
+  // if profile is undefined, logIn(false)
+  // if profile exists, logIn(true)
+
+  useEffect(() => {
+    fetch('./accounts/', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    })
+    .then(response => {
+      if (response.ok && response.body.profile) {
+        logIn(true);
+      }
+    })
+    .catch((err) => console.log(err));
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
