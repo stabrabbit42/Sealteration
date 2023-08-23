@@ -23,8 +23,8 @@ const Signup = (props) => {
       // modify state (in APP) to set isLoggedIn to true and navigate to home page
       .then((response) => {
         if (response.ok) {
-          console.log(res.body)
-          logIn(false);
+          console.log(response.body);
+          logIn(false); // If you want immediate login on signup, change to true
           navigate('/');
         }
       })

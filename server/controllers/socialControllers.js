@@ -90,10 +90,13 @@ socialControllers.login = async (req, res, next) => {
   const query = `SELECT s.email, s.hash_id, s.password FROM public.users s WHERE s.email='${email}'`;
   //AND s.password='${hpassword}'
   try {
-    console.log("before the query");
+    console.log('before the query');
     const user = await db.query(query);
     console.log('within socialControllers.login, user: ', user);
-    if(user.rows.length > 0 && bcrypt.compare(user.rows[0].password, hpassword)){
+    if (
+      user.rows.length > 0 &&
+      bcrypt.compare(user.rows[0].password, hpassword)
+    ) {
       res.locals.id = user.rows[0].hash_id;
       return next();
     } else if (user.rows.length === 0) {
@@ -102,16 +105,14 @@ socialControllers.login = async (req, res, next) => {
         status: 401,
         message: { err: 'Invalid Username or Password' },
       });
-    } 
-    else {
+    } else {
       return next({
         log: 'Invalid Username or Password',
         status: 401,
         message: { err: 'Invalid Username or Password' },
       });
     }
-  }
-   catch (error) {
+  } catch (error) {
     return next({
       log: 'An error occurred while logging in',
       status: 500,
@@ -121,16 +122,17 @@ socialControllers.login = async (req, res, next) => {
 };
 
 socialControllers.startSession = async (req, res, next) => {
-  console.log('inside start session')
+  console.log('inside start session');
   //set cookies
   try {
     const token = jwt.sign({ email: req.body.email }, authKey, {
       expiresIn: 1 * 24 * 60 * 60 * 1000, // Expires in one day // 86400000
     });
 
-    console.log('inside try of startSession')
+    console.log('inside try of startSession');
     res.cookie('cookie', 'hi');
-   const cookieResponse = res.cookie('jwt', token, { // Doesn't need to be stored in a variable
+    const cookieResponse = res.cookie('jwt', token, {
+      // Doesn't need to be stored in a variable
       maxAge: 1 * 24 * 60 * 60, // 1 day
       httpOnly: true,
     });
@@ -146,8 +148,10 @@ socialControllers.startSession = async (req, res, next) => {
 };
 
 socialControllers.isLoggedIn = async (req, res, next) => {
+  console.log('inside isLoggedIn');
   // check if req.cookies includes 'jwt'
   try {
+    console.log('inside isLoggedIn try block');
     const payload = await jwt.verify(req.cookies.jwt, authKey);
     // query DB to see if email exists there
     const query = `SELECT email FROM public.users WHERE email = '${payload.email}'`;
@@ -173,7 +177,9 @@ socialControllers.isLoggedIn = async (req, res, next) => {
 };
 
 socialControllers.pageDetails = async (req, res, next) => {
+  console.log('inside page details');
   try {
+    console.log('inside page details try block');
     const query = `SELECT * FROM public.users WHERE hash_id = '${req.params.id}'`;
     const result = await db.query(query);
     const profile = result.rows[0];
