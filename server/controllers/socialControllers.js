@@ -84,10 +84,22 @@ socialControllers.login = async (req, res, next) => {
   console.log('inside login');
   //query for user and password, authenticate;
   const { email, password } = req.body;
+  console.log('LINE 87', { email, password })
   //hash and check
   const passwordString = password.toString();
-  const hpassword = await bcrypt.hash(passwordString, WORKFACTOR);
-  const query = `SELECT s.email, s.hash_id, s.password FROM public.users s WHERE s.email='${email}'`;
+  // const hpassword = await bcrypt.hash(passwordString, WORKFACTOR);
+  // const hpasswordQuery = `SELECT password FROM public.users WHERE email='${email}'`;
+  // try {
+  //   const hpassword = await db.query(hpasswordQuery);
+  //   console.log('LINE 94', hpassword);
+  //   const test = await bcrypt.compare(password, hpassword);
+  //   console.log(test);
+  // } catch (err) {
+  //   console.log('couldnt query the hpassword from db', err)
+  // }
+
+
+  const query = `SELECT email, hash_id, password FROM public.users WHERE email='${email}'`;
   //AND s.password='${hpassword}'
   try {
     console.log('before the query');
@@ -95,7 +107,7 @@ socialControllers.login = async (req, res, next) => {
     console.log('within socialControllers.login, user: ', user);
     if (
       user.rows.length > 0 &&
-      bcrypt.compare(user.rows[0].password, hpassword)
+     await bcrypt.compare(password, user.rows[0].password)
     ) {
       res.locals.id = user.rows[0].hash_id;
       return next();
