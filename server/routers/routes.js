@@ -20,7 +20,7 @@ router.post('/login', socialControllers.login, socialControllers.startSession, (
 router.get('/', socialControllers.isLoggedIn, socialControllers.pageDetails, (req, res) => {
   const { profile } = res.locals;
   console.log('through all the middleware')
-  return res.status(200).send(profile);
+  return res.status(200).json(profile);
 });
 
 

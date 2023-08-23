@@ -27,10 +27,14 @@ const App = () => {
       headers: {'Content-Type': 'application/json'},
     })
     .then(response => {
-      if (response.ok && response.body.profile) {
-        logIn(true);
-      }
+      if (response.ok) return response.json();
+      else throw new Error('Failed to retrieve login data');
     })
+    .then(response => {
+      console.log(response);
+      logIn(true);
+      }
+    )
     .catch((err) => console.log(err));
   }, []);
 
