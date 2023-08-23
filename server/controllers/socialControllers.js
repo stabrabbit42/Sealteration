@@ -156,6 +156,7 @@ socialControllers.isLoggedIn = async (req, res, next) => {
     const payload = await jwt.verify(req.cookies.jwt, authKey);
     // query DB to see if email exists there
     const query = `SELECT email FROM public.users WHERE email = '${payload.email}'`;
+    // console.log('******EMAIL******', payload.email);
     const result = await db.query(query);
     // if the email in the JWT payload is not in our DB, throw an error
     if (result.rows.length === 0) {
@@ -167,6 +168,7 @@ socialControllers.isLoggedIn = async (req, res, next) => {
     }
     // if the email in the JWT payload is in our DB, store the email in res.locals and return next
     res.locals.email = payload.email;
+    console.log('*******IS LOGGED IN RES.LOCALS.EMAIL******', res.locals.email);
     return next();
   } catch (error) {
     return next({
@@ -179,13 +181,15 @@ socialControllers.isLoggedIn = async (req, res, next) => {
 
 socialControllers.pageDetails = async (req, res, next) => {
   console.log('inside page details');
-const { email } = res.locals.email;
+  const { email } = res.locals;
+  console.log('****EMAIL IN PGDETS*****', email);
   try {
     console.log('inside page details try block');
-    const query = `SELECT * FROM public.users WHERE email = '${email}'`;
+    const query = `SELECT display_name, interests, age, location, education, job FROM public.users WHERE email ='${email}'`;
     const result = await db.query(query);
     const profile = result.rows[0];
     res.locals.profile = profile;
+    console.log(profile);
     return next();
   } catch (error) {
     return next({
@@ -193,6 +197,23 @@ const { email } = res.locals.email;
       status: 500,
       message: { err: 'error while fetching user details.' },
     });
+  }
+};
+
+socialControllers.updateDetails = async (req, res, next) => {
+  console.log('inside updateDetails');
+  const { email } = res.locals;
+  const { display_name, interests, age, location, education, job } =
+    req.body.updatedProfile;
+
+  const query = `UPDATE public.users SET display_name='${display_name}', interests='${interests}', age='${age}', location='${location}', education='${education}', job='${job}' WHERE email = '${email}'`;
+
+  try {
+    console.log('inside try block of updateDetails');
+    await db.query(query);
+    return next();
+  } catch (err) {
+    console.log(err);
   }
 };
 
