@@ -16,11 +16,12 @@ if (process.env.NODE_ENV === 'production') {
     return res.status(200).sendFile(path.join(__dirname, '../client'));
   });
 }
-
+//serves html on load of website
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
 
+//handles routes made to accounts endpoint
 app.use('/accounts', socialRouter);
 
 // catch-all route handler for any requests to an unknown route
