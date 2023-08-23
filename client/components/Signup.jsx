@@ -23,10 +23,10 @@ const Signup = (props) => {
       // modify state (in APP) to set isLoggedIn to true and navigate to home page
       .then((response) => {
         if (response.ok) {
-          console.log('successfully signup')
-          logIn(true);
+          console.log(res.body)
+          logIn(false);
           navigate('/');
-        } 
+        }
       })
       // errors
       .catch((err) => {
