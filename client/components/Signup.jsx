@@ -29,7 +29,7 @@ const Signup = (props) => {
           logIn(false); // If you want immediate login on signup, change to true
           navigate('/');
         } else {
-          alert('An account with that username already exists!');
+          updateSignupError('An account with that username already exists!');
         }
       })
       // errors
@@ -38,6 +38,11 @@ const Signup = (props) => {
       });
   };
 
+  let signupErrorMessage;
+
+  if (signupError) {
+    signupErrorMessage = <p>{signupError}</p>
+  };
 
   return (
     <div id="login">
@@ -67,6 +72,7 @@ const Signup = (props) => {
           fullWidth={true}
           onChange={(e) => updateEmail(e.target.value)}
         ></TextField>
+        {signupErrorMessage}
         <TextField
           variant="outlined"
           label="Password"
