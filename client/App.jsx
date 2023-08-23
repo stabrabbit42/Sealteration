@@ -12,6 +12,14 @@ import Signup from './components/Signup.jsx';
 
 const App = () => {
   const [isLoggedIn, logIn] = useState(false);
+  const [profile, updateProfile] = useState({
+    display_name: null,
+    interests: null,
+    age: null,
+    location: null,
+    education: null,
+    job: null
+  });
 
   // UseEffect to check state of login on app startup
   // Needs to make a call to the backend to see if cookie is valid
