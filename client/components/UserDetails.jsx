@@ -3,6 +3,10 @@ import { Container } from '@mui/material';
 
 const UserDetails = (props) => {
   // const { display_name, age, location, job, education, interests } = props.data;
+  const { profile } = props;
+  console.log('userProfile', profile);
+
+  // {updatedProfile: {display_name, interests, age, location, education, job}}
 
   return (
     <div id="userDetails">
@@ -23,14 +27,14 @@ const UserDetails = (props) => {
         }}
       >
         <div className="userHeadContainer">
-          <h3 className="userDisplayName">Display Name: </h3>
+          <h3 className="userDisplayName">Display Name: {profile.display_name}</h3>
         </div>
         <ul className="userDetailsList">
-          <li className="userDetail">Age: </li>
-          <li className="userDetail">Location: </li>
-          <li className="userDetail">Job: </li>
-          <li className="userDetail">Education: </li>
-          <li className="userDetail">Interests: </li>
+          <li className="userDetail">Age: {profile.age} </li>
+          <li className="userDetail">Location: {profile.location}</li>
+          <li className="userDetail">Job: {profile.job} </li>
+          <li className="userDetail">Education: {profile.education} </li>
+          <li className="userDetail">Interests: {profile.interests} </li>
         </ul>
       </Container>
     </div>

@@ -137,6 +137,7 @@ socialControllers.login = async (req, res, next) => {
 
 socialControllers.startSession = async (req, res, next) => {
   console.log('inside start session');
+  res.locals.email = req.body.email;
   //set cookies
   try {
     const token = jwt.sign({ email: req.body.email }, authKey, {

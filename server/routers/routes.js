@@ -11,9 +11,9 @@ router.post('/signup', socialControllers.signup, /*socialControllers.startSessio
     //return res.status(200).redirect(`/${id}`);
     // .redirect("/home");
 });
-router.post('/login', socialControllers.login, socialControllers.startSession, (req, res) => {
-    const {id} = res.locals;
-    return res.sendStatus(200);
+router.post('/login', socialControllers.login, socialControllers.startSession, socialControllers.pageDetails, (req, res) => {
+    const { profile } = res.locals;
+    return res.status(200).json(profile);
     // return res.status(302).redirect(`GET /:${id}`);
 });
 //user's homepage has the ID of server info stored as type
