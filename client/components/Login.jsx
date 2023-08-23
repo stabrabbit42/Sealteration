@@ -26,9 +26,13 @@ const Login = (props) => {
         console.log(response)
         if (response.ok) {
           logIn(true);
+          return response.json();
         } else {
           updateLoginError('Incorrect login details. Please try again.');
         }
+      })
+      .then(response => {
+        console.log(response);
       })
       // errors
       .catch((err) => {
