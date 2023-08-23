@@ -7,6 +7,8 @@ const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [loginError, updateLoginError] = useState('');
+
   const { logIn } = props;
   // handle login function
   const handleLogin = () => {
@@ -24,7 +26,13 @@ const Login = (props) => {
         console.log(response)
         if (response.ok) {
           logIn(true);
+          return response.json();
+        } else {
+          updateLoginError('Incorrect login details. Please try again.');
         }
+      })
+      .then(response => {
+        console.log(response);
       })
       // errors
       .catch((err) => {
@@ -32,6 +40,23 @@ const Login = (props) => {
       });
   };
 
+  let loginErrorMessage;
+
+  if (loginError) {
+    loginErrorMessage = 
+      <Box
+        sx={{
+          color: 'rgb(255, 63, 63)',
+          bgcolor: 'rgb(255, 239, 239)',
+          border: '1px solid rgb(255, 63, 63)',
+          width: '100%',
+          borderRadius: '10px',
+          textAlign: 'center'
+        }}
+      >
+        <p>{loginError}</p>
+      </Box>
+  };
 
 
   return (
@@ -49,12 +74,13 @@ const Login = (props) => {
           borderRadius: '10px',
           boxShadow:
             '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-          height: '60%',
+          height: 'auto',
           width: '30%',
           p: 3,
         }}
       >
         <h1>Welcome!</h1>
+        {loginErrorMessage}
         <TextField
           variant="outlined"
           label="Email"

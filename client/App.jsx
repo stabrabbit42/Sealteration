@@ -13,8 +13,43 @@ import Signup from './components/Signup.jsx';
 const App = () => {
   const [isLoggedIn, logIn] = useState(false);
 
+  const [profile, updateProfile] = useState({
+    display_name: 'Nathan',
+    interests: 'Coding',
+    age: 18,
+    location: 'Canada',
+    education: 'None',
+    job: 'None'
+  });
+
   // UseEffect to check state of login on app startup
   // Needs to make a call to the backend to see if cookie is valid
+
+  // send GET request to /accounts/ (contains a jwt cookie)
+  // receives a {profile} key
+  // if profile is undefined, logIn(false)
+  // if profile exists, logIn(true)
+
+  useEffect(() => {
+    fetch('./accounts/', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    })
+    .then(response => {
+      if (response.ok) return response.json();
+      else throw new Error('Failed to retrieve login data');
+    })
+    .then(response => {
+      console.log(response);
+      logIn(true);
+      }
+    )
+    .catch((err) => console.log(err));
+  }, []);
+
+  // useEffect(() => {
+  //   updateProfile();
+  // }, [isLoggedIn]);
 
   return (
     <BrowserRouter>
@@ -24,7 +59,7 @@ const App = () => {
           path="/"
           element={
             isLoggedIn ? (
-              <MainContainer logIn={logIn} />
+              <MainContainer logIn={logIn} profile={profile} />
             ) : (
               <Login logIn={logIn} />
             )

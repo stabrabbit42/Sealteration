@@ -9,6 +9,8 @@ const Signup = (props) => {
   const [email, updateEmail] = useState('');
   const [password, updatePassword] = useState('');
 
+  const [signupError, updateSignupError] = useState('');
+
   // handle signUp function
   const handleSignup = (e) => {
     e.preventDefault();
@@ -26,6 +28,8 @@ const Signup = (props) => {
           console.log(response.body);
           logIn(false); // If you want immediate login on signup, change to true
           navigate('/');
+        } else {
+          updateSignupError('That email address is already registered!');
         }
       })
       // errors
@@ -34,6 +38,23 @@ const Signup = (props) => {
       });
   };
 
+  let signupErrorMessage;
+
+  if (signupError) {
+    signupErrorMessage = 
+      <Box
+        sx={{
+          color: 'rgb(255, 63, 63)',
+          bgcolor: 'rgb(255, 239, 239)',
+          border: '1px solid rgb(255, 63, 63)',
+          width: '100%',
+          borderRadius: '10px',
+          textAlign: 'center'
+        }}
+      >
+        <p>{signupError}</p>
+      </Box>
+  };
 
   return (
     <div id="login">
@@ -50,7 +71,7 @@ const Signup = (props) => {
           borderRadius: '10px',
           boxShadow:
             '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-          height: '60%',
+          height: 'auto',
           width: '30%',
           p: 3,
         }}
@@ -63,6 +84,7 @@ const Signup = (props) => {
           fullWidth={true}
           onChange={(e) => updateEmail(e.target.value)}
         ></TextField>
+        {signupErrorMessage}
         <TextField
           variant="outlined"
           label="Password"
