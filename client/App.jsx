@@ -12,13 +12,14 @@ import Signup from './components/Signup.jsx';
 
 const App = () => {
   const [isLoggedIn, logIn] = useState(false);
+
   const [profile, updateProfile] = useState({
-    display_name: null,
-    interests: null,
-    age: null,
-    location: null,
-    education: null,
-    job: null
+    display_name: 'Nathan',
+    interests: 'Coding',
+    age: 18,
+    location: 'Canada',
+    education: 'None',
+    job: 'None'
   });
 
   // UseEffect to check state of login on app startup
@@ -46,6 +47,10 @@ const App = () => {
     .catch((err) => console.log(err));
   }, []);
 
+  // useEffect(() => {
+  //   updateProfile();
+  // }, [isLoggedIn]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -54,7 +59,7 @@ const App = () => {
           path="/"
           element={
             isLoggedIn ? (
-              <MainContainer logIn={logIn} />
+              <MainContainer logIn={logIn} profile={profile} />
             ) : (
               <Login logIn={logIn} />
             )

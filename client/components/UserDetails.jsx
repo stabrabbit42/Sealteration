@@ -4,6 +4,7 @@ import { Container } from '@mui/material';
 const UserDetails = (props) => {
   // const { display_name, age, location, job, education, interests } = props.data;
   const { profile } = props;
+  console.log('userProfile', profile);
 
   // {updatedProfile: {display_name, interests, age, location, education, job}}
 
