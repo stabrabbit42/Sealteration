@@ -23,6 +23,10 @@ router.get('/', socialControllers.isLoggedIn, socialControllers.pageDetails, (re
   return res.status(200).json(profile);
 });
 
+router.put('/info', socialControllers.isLoggedIn, socialControllers.updateDetails, (req, res) => {
+  return res.status(200).json('Updated successfully');
+})
+
 
 router.post('/:id/post', socialControllers.isLoggedIn, socialControllers.textpost, (req, res) => {
   const {content} = res.locals;
