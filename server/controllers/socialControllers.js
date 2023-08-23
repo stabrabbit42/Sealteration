@@ -149,6 +149,7 @@ socialControllers.startSession = async (req, res, next) => {
 
 socialControllers.isLoggedIn = async (req, res, next) => {
   console.log('inside isLoggedIn');
+  console.log(req.cookies.jwt);
   // check if req.cookies includes 'jwt'
   try {
     console.log('inside isLoggedIn try block');
@@ -178,9 +179,10 @@ socialControllers.isLoggedIn = async (req, res, next) => {
 
 socialControllers.pageDetails = async (req, res, next) => {
   console.log('inside page details');
+const { email } = res.locals.email;
   try {
     console.log('inside page details try block');
-    const query = `SELECT * FROM public.users WHERE hash_id = '${req.params.id}'`;
+    const query = `SELECT * FROM public.users WHERE email = '${email}'`;
     const result = await db.query(query);
     const profile = result.rows[0];
     res.locals.profile = profile;
