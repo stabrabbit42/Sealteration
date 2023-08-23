@@ -10,6 +10,10 @@ const authKey = 'iouamncvxadrbhasvjn';
 socialControllers.signup = async (req, res, next) => {
   const { email, password } = req.body;
   const hpassword = await bcrypt.hash(password, WORKFACTOR);
+
+  console.log(email);
+  console.log(password);
+
   try {
     // Perhaps do not need to use * in selector, consider changing to email
     const query = `SELECT * FROM public.users WHERE email = '${email}'`;

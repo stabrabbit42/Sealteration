@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import login
 import Login from './components/Login.jsx';
 // import main container
@@ -12,6 +12,9 @@ import Signup from './components/Signup.jsx';
 
 const App = () => {
   const [isLoggedIn, logIn] = useState(false);
+
+  // UseEffect to check state of login on app startup
+  // Needs to make a call to the backend to see if cookie is valid
 
   return (
     <BrowserRouter>
