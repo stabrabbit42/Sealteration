@@ -46,12 +46,14 @@ socialControllers.signup = async (req, res, next) => {
 };
 
 socialControllers.textpost = async (req, res, next) => {
+  console.log('inside textpost')
   const { email } = res.locals;
   const { content } = req.body;
   try {
+    console.log('inside try block textpost')
     //check if req.query.id is ==hash id and email==email of the same user
     //then post if it is
-    const query = `SELECT s.email, s.hash_id FROM public.users s WHERE s.email=${email} s.hash_id=${req.params.id} RETURNING user_id`;
+    const query = `SELECT email FROM public.users WHERE email=${email} RETURNING user_id`;
     const user = await db.query(query);
     if (user.rows.length === 0) {
       return next({
