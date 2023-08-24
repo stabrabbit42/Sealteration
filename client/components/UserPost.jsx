@@ -1,10 +1,32 @@
-import React from 'react';
-import { Container, Divider } from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import { Container, Divider, Button } from '@mui/material';
 
-const UserPost = ({text, userId}) => {
+const UserPost = ({text, postId, displayName, inheritedLikes}) => {
   // const { title, content } = props;
+  const [likes, updateLikes] = useState(0)
 
-  // potential other features that might need this to be changed to a box include: comments and likes
+  useEffect(() => {
+    updateLikes(inheritedLikes);
+  }, []);
+  
+  const like = () => {
+    console.log(postId);
+    fetch('/accounts/like', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        postId: postId
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then(response => updateLikes(response))
+    .catch(err => console.log(err));
+  }
+    // potential other features that might need this to be changed to a box include: comments and likes
 
   return (
     <div id='post'>
@@ -25,9 +47,18 @@ const UserPost = ({text, userId}) => {
           margin: '0',
         }}
       >
-        <h3>{userId}</h3>
+        <h3>{displayName}</h3>
         <Divider /> 
         <div id='content'>{text}</div>
+         <Button
+          variant="contained"
+          color="primary"
+          fullWidth={true}
+          sx={{ textTransform: 'none', width: '25%', marginLeft: 'auto'  }}
+          onClick={like} // Disable the button if no content
+          >
+         {likes}  Likes
+        </Button>
       </Container>
     </div>
   );

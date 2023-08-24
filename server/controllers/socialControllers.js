@@ -48,7 +48,9 @@ socialControllers.signup = async (req, res, next) => {
 socialControllers.textpost = async (req, res, next) => {
   console.log('inside textpost')
   const { email } = res.locals;
-  const { content } = req.body;
+  const { content, display_name } = req.body;
+  console.log(content);
+  console.log(display_name);
   try {
     console.log('inside try block textpost')
     //check if req.query.id is ==hash id and email==email of the same user
@@ -66,7 +68,7 @@ socialControllers.textpost = async (req, res, next) => {
       console.log('in else********')
       // INSERT this new post into the DB
       const userID = user.rows[0].user_id;
-      const insertQuery = `INSERT INTO public.textPost (user_id, content) VALUES ('${userID}', '${content}')`;
+      const insertQuery = `INSERT INTO public.textPost (user_id, content, likes, display_name) VALUES ('${userID}', '${content}', ${0}, '${display_name}')`;
       const insertContent = await db.query(insertQuery);
       // SELECT all of this user's posts
       const contentAll = `SELECT * FROM public.textPost WHERE user_id ='${userID}'`;
@@ -135,6 +137,28 @@ socialControllers.getAllPosts = async (req, res, next) => {
       status: 500,
       message: { err: 'Internal server error - unable to get all content' },
     });
+}
+};
+
+socialControllers.likePost = async (req, res, next) => {
+const { postId } = req.body;
+const postIdQuery = `SELECT likes FROM public.textPost WHERE post_id='${ postId }'`;
+console.log(`POST ID: ${postId}`)
+try {
+  console.log('in try block')
+  const queriedPost = await db.query(postIdQuery);
+  console.log('149');
+  const likes = queriedPost.rows[0].likes + 1;
+  console.log('151');
+  const updateLikes = `UPDATE public.textPost SET likes=${likes} WHERE post_id='${postId}' RETURNING likes`;
+  console.log('153');
+  const updatedLs = await db.query(updateLikes);
+  console.log('155');
+  res.locals.newLikes = updatedLs.rows[0].likes;
+  console.log('here at bottom')
+  return next();
+} catch (error) {
+  return next(error);
 }
 }
 

@@ -11,7 +11,7 @@ const UserContainer = ({profile, updateProfile, content, updateContent}) => {
     <div id="userContainer">
     <UserDetails profile={profile} updateProfile={updateProfile}/>
     <PostContainer content={content}/>
-    <Postbox updateContent={updateContent}/>
+    <Postbox updateContent={updateContent} profile={profile}/>
     </div>
   )
 }

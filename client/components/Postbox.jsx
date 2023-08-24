@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Container, TextField, Button} from '@mui/material';
 
-const Postbox = ({updateContent}) => {
+const Postbox = ({updateContent, profile}) => {
   const [postContent, setPostContent] = useState('');
 
   const handlePostSubmit = (e) =>{
@@ -11,7 +11,8 @@ const Postbox = ({updateContent}) => {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          content: postContent
+          content: postContent,
+          display_name: profile.display_name
         })
     })
     .then((response)=>{
