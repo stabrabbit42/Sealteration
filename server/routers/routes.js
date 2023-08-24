@@ -17,7 +17,7 @@ router.post('/login', socialControllers.login, socialControllers.startSession, s
     // return res.status(302).redirect(`GET /:${id}`);
 });
 //user's homepage has the ID of server info stored as type
-router.get('/', socialControllers.isLoggedIn, socialControllers.pageDetails, (req, res) => {
+router.get('/', socialControllers.isLoggedIn, socialControllers.pageDetails, socialControllers.getAllPosts, (req, res) => {
   const { profile, content } = res.locals;
   console.log('through all the middleware')
   return res.status(200).json({profile, content});
