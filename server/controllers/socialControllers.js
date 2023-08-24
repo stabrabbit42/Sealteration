@@ -66,7 +66,7 @@ socialControllers.textpost = async (req, res, next) => {
       console.log('in else********')
       // INSERT this new post into the DB
       const userID = user.rows[0].user_id;
-      const insertQuery = `INSERT INTO public.textPost (user_id, content) VALUES ('${userID}', '${content}')`;
+      const insertQuery = `INSERT INTO public.textPost (user_id, content, likes) VALUES ('${userID}', '${content}', ${0})`;
       const insertContent = await db.query(insertQuery);
       // SELECT all of this user's posts
       const contentAll = `SELECT * FROM public.textPost WHERE user_id ='${userID}'`;
@@ -135,6 +135,21 @@ socialControllers.getAllPosts = async (req, res, next) => {
       status: 500,
       message: { err: 'Internal server error - unable to get all content' },
     });
+}
+};
+
+socialControllers.likePost = async (req, res, next) => {
+const { postId } = req.body;
+const postIdQuery = `SELECT likes FROM public.textPost WHERE post_id='${ postId }'`;
+try {
+  const queriedPost = await db.query(postIdQuery);
+  const likes = queriedPost.rows[0].likes + 1;
+  const updateLikes = `UPDATE public.textPost SET likes=${likes} WHERE post_id='${postId}' RETURNING likes`;
+  const updatedLs = await db.query(updateLikes);
+  res.locals.newLikes = updatedLs.rows[0].likes;
+  return next();
+} catch (error) {
+  return next(error);
 }
 }
 
