@@ -22,6 +22,8 @@ const App = () => {
     job: 'None'
   });
 
+  const [content, updateContent] = useState([]);
+
   // UseEffect to check state of login on app startup
   // Needs to make a call to the backend to see if cookie is valid
 
@@ -43,6 +45,7 @@ const App = () => {
       console.log(response);
       logIn(true);
       const { age, display_name, education, interests, job, location } = response.profile;
+      updateContent(response.content);
       updateProfile({
         age: age,
         display_name: display_name,
@@ -70,7 +73,7 @@ const App = () => {
           path="/"
           element={
             isLoggedIn ? (
-              <MainContainer logIn={logIn} profile={profile} updateProfile={updateProfile}/>
+              <MainContainer logIn={logIn} profile={profile} updateProfile={updateProfile} content={content} updateContent={updateContent}/>
             ) : (
               <Login logIn={logIn} updateProfile={updateProfile}/>
             )

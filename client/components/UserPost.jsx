@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container } from '@mui/material';
+import { Container, Divider } from '@mui/material';
 
-const UserPost = (props) => {
+const UserPost = ({text, userId}) => {
   // const { title, content } = props;
 
   // potential other features that might need this to be changed to a box include: comments and likes
@@ -22,10 +22,12 @@ const UserPost = (props) => {
           height: '100%',
           width: '100%',
           p: 2,
+          margin: '0',
         }}
       >
-        <h2> Title </h2>
-        <div id='content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vulputate ut pharetra sit amet aliquam id diam maecenas. Cursus sit amet dictum sit amet justo. Elit pellentesque habitant morbi tristique senectus et netus.</div>
+        <h3>{userId}</h3>
+        <Divider /> 
+        <div id='content'>{text}</div>
       </Container>
     </div>
   );
