@@ -8,10 +8,12 @@ const NavBar = (props) => {
   // handle logout
   const handleLogout = () => {
     logIn(false);
+    fetch('/accounts/signout')
+    .catch((err) => console.log(err));
   };
 
   return (
-    <AppBar position="static" sx={{ width: '100%', color: 'secondary' }}>
+    <AppBar position="static" sx={{ width: '100%', color: 'white' }}>
       <Toolbar
         sx={{
           display: 'flex',
@@ -28,13 +30,13 @@ const NavBar = (props) => {
             gap: 1
           }}
         >
-          <div>Logo</div>
+          <div style={{color: 'white'}}>Logo</div>
           <Button variant="outlined" size="small" style={{ color: 'white' }}>
             Home
           </Button>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', width: '30%' }}>
-          <SearchIcon size="small" />
+        <Box sx={{ display: 'flex', alignItems: 'center', width: '30%', sx: {color: 'white'}}}>
+          <SearchIcon size="small" color='white' />
           <TextField
             label="Search for users"
             variant="standard"

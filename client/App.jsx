@@ -42,6 +42,17 @@ const App = () => {
     .then(response => {
       console.log(response);
       logIn(true);
+      const { age, display_name, education, interests, job, location } = response.profile;
+      updateProfile({
+        age: age,
+        display_name: display_name,
+        education: education,
+        interests: interests,
+        job: job,
+        location: location,
+      })
+      // logIn does not get called after updateProfile
+      console.log(isLoggedIn);
       }
     )
     .catch((err) => console.log(err));
@@ -59,9 +70,9 @@ const App = () => {
           path="/"
           element={
             isLoggedIn ? (
-              <MainContainer logIn={logIn} profile={profile} />
+              <MainContainer logIn={logIn} profile={profile} updateProfile={updateProfile}/>
             ) : (
-              <Login logIn={logIn} />
+              <Login logIn={logIn} updateProfile={updateProfile}/>
             )
           }
         />
