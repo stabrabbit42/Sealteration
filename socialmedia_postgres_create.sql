@@ -44,5 +44,6 @@ CREATE TABLE public.imagePost (
 
 ALTER TABLE public.textPost ADD CONSTRAINT "users_fk0" FOREIGN KEY ("user_id") REFERENCES  public.users("user_id");
 ALTER TABLE public.imagePost ADD CONSTRAINT "users_fk1" FOREIGN KEY ("user_id") REFERENCES  public.users("user_id");
+ALTER TABLE public.textPost ADD likes INT;
 
 -- psql -d postgres://dulmbgqe:L0ZqiYkMx2H9ApdNWK-exIK8uPr-fGfu@batyr.db.elephantsql.com/dulmbgqe  -f socialmedia_postgres_create.sql

@@ -25,17 +25,21 @@ router.get('/', socialControllers.isLoggedIn, socialControllers.pageDetails, (re
 
 router.put('/info', socialControllers.isLoggedIn, socialControllers.updateDetails, (req, res) => {
   return res.status(200).json('Updated successfully');
-})
-
+});
 
 router.post('/post', socialControllers.isLoggedIn, socialControllers.textpost, (req, res) => {
   const {content} = res.locals;
   return res.status(200).json(content);
+});
+
+router.put('/like', socialControllers.isLoggedIn, socialControllers.likePost, (req, res) => {
+  const {newLikes} = res.locals;
+  return res.status(200).json(newLikes);
 })
 
 router.get('/signout', socialControllers.isLoggedIn, socialControllers.logout, (req, res) => {
 // res.clearCookie('jwt');
 return res.status(200).json('Cookie cleared');
-})
+});
 
 module.exports = router;

@@ -3,7 +3,16 @@ import { Container } from '@mui/material';
 
 const UserPost = (props) => {
   // const { title, content } = props;
+const like = async () => {
+   await fetch('http://localhost:3000/accounts/like', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: {
+      "postId": 
+    }
 
+   })
+}
   // potential other features that might need this to be changed to a box include: comments and likes
 
   return (
@@ -26,6 +35,8 @@ const UserPost = (props) => {
       >
         <h2> Title </h2>
         <div id='content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vulputate ut pharetra sit amet aliquam id diam maecenas. Cursus sit amet dictum sit amet justo. Elit pellentesque habitant morbi tristique senectus et netus.</div>
+        <button onClick={like} >Like</button>
+
       </Container>
     </div>
   );
