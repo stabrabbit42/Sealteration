@@ -11,9 +11,9 @@ router.post('/signup', socialControllers.signup, /*socialControllers.startSessio
     //return res.status(200).redirect(`/${id}`);
     // .redirect("/home");
 });
-router.post('/login', socialControllers.login, socialControllers.startSession, socialControllers.pageDetails, (req, res) => {
-    const { profile } = res.locals;
-    return res.status(200).json(profile);
+router.post('/login', socialControllers.login, socialControllers.startSession, socialControllers.pageDetails, socialControllers.getAllPosts, (req, res) => {
+    const { profile, content } = res.locals;
+    return res.status(200).json({profile, content});
     // return res.status(302).redirect(`GET /:${id}`);
 });
 //user's homepage has the ID of server info stored as type
@@ -28,9 +28,14 @@ router.put('/info', socialControllers.isLoggedIn, socialControllers.updateDetail
 })
 
 
-router.post('/:id/post', socialControllers.isLoggedIn, socialControllers.textpost, (req, res) => {
+router.post('/post', socialControllers.isLoggedIn, socialControllers.textpost, (req, res) => {
   const {content} = res.locals;
-  return res.status(200).send(content);
+  return res.status(200).json(content);
+})
+
+router.get('/signout', socialControllers.isLoggedIn, socialControllers.logout, (req, res) => {
+// res.clearCookie('jwt');
+return res.status(200).json('Cookie cleared');
 })
 
 module.exports = router;
