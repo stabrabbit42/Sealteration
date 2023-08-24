@@ -46,13 +46,16 @@ socialControllers.signup = async (req, res, next) => {
 };
 
 socialControllers.textpost = async (req, res, next) => {
+  console.log('inside textpost')
   const { email } = res.locals;
   const { content } = req.body;
   try {
+    console.log('inside try block textpost')
     //check if req.query.id is ==hash id and email==email of the same user
     //then post if it is
-    const query = `SELECT s.email, s.hash_id FROM public.users s WHERE s.email=${email} s.hash_id=${req.params.id} RETURNING user_id`;
+    const query = `SELECT * FROM public.users WHERE email='${email}'`;
     const user = await db.query(query);
+    console.log(user)
     if (user.rows.length === 0) {
       return next({
         log: 'Invalid Username or Password',
@@ -60,6 +63,7 @@ socialControllers.textpost = async (req, res, next) => {
         message: { err: 'Invalid Username or Password' },
       });
     } else {
+      console.log('in else********')
       // INSERT this new post into the DB
       const userID = user.rows[0].user_id;
       const insertQuery = `INSERT INTO public.textPost (user_id, content) VALUES ('${userID}', '${content}')`;
@@ -79,6 +83,60 @@ socialControllers.textpost = async (req, res, next) => {
     });
   }
 };
+
+socialControllers.getUserPosts = async (req, res, next) => {
+  console.log('inside textpost')
+  const { email } = res.locals;
+  try {
+    console.log('inside try block textpost')
+
+    const query = `SELECT * FROM public.users WHERE email='${email}'`;
+    const user = await db.query(query);
+    console.log(user)
+    if (user.rows.length === 0) {
+      return next({
+        log: 'Invalid Username or Password',
+        status: 401,
+        message: { err: 'Invalid Username or Password' },
+      });
+    } else {
+      console.log('in else********')
+      // SELECT all of this user's posts
+      const userID = user.rows[0].user_id;
+      const contentAll = `SELECT * FROM public.textPost WHERE user_id ='${userID}'`;
+      const allPosts = await db.query(contentAll);
+      // store the posts on res.locals.content and go to next
+      res.locals.content = allPosts.rows;
+      return next();
+    }
+  } catch (error) {
+    return next({
+      log: 'An error occurred while getting users content',
+      status: 500,
+      message: { err: 'Internal server error - unable to get content' },
+    });
+  }
+};
+
+socialControllers.getAllPosts = async (req, res, next) => {
+  console.log('inside getAllPosts')
+  try {
+    console.log('inside try block getAllPosts')
+      // SELECT all posts
+      const contentAll = `SELECT * FROM public.textPost`;
+      const allPosts = await db.query(contentAll);
+      // store the posts on res.locals.content and go to next
+      res.locals.content = allPosts.rows;
+      console.log(res.locals.content)
+      return next();
+    } catch (error) {
+    return next({
+      log: 'An error occurred while getting all content',
+      status: 500,
+      message: { err: 'Internal server error - unable to get all content' },
+    });
+}
+}
 
 socialControllers.login = async (req, res, next) => {
   console.log('inside login');
@@ -139,14 +197,14 @@ socialControllers.startSession = async (req, res, next) => {
   //set cookies
   try {
     const token = jwt.sign({ email: req.body.email }, authKey, {
-      expiresIn: 1 * 24 * 60 * 60 * 1000, // Expires in one day // 86400000
+      expiresIn: '3600s' , // Expires in one day // 86400000
     });
 
     console.log('inside try of startSession');
     res.cookie('cookie', 'hi');
     const cookieResponse = res.cookie('jwt', token, {
       // Doesn't need to be stored in a variable
-      maxAge: 1 * 24 * 60 * 60, // 1 day
+      maxAge: 3600000, // 1 day
       httpOnly: true,
     });
     console.log('past cookie setter');
@@ -234,9 +292,7 @@ socialControllers.logout = async (req, res, next) => {
   try {
     // delete the JWT cookie
     res.clearCookie('jwt');
-    // TODO: reroute user to login screen? or return next()?
-    return res.status(200).reroute('/accounts/login');
-    // return next();
+    return next();
   } catch (error) {
     return next({
       log: 'Error in userController.logout',
