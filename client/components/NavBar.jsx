@@ -30,13 +30,14 @@ const NavBar = (props) => {
             gap: 1
           }}
         >
-          <div style={{color: 'white'}}>Logo</div>
+          <i><div style={{color: 'white', 'font-family': 'Garamond, serif', 'font-size': '24px'}}>The Open Sea</div></i>
+          <img src='https://cdn.discordapp.com/attachments/329284155156201472/1144356050737319966/jinbeemote.png' height = '50px' width='50px'></img>
           <Button variant="outlined" size="small" style={{ color: 'white' }}>
             Home
           </Button>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', width: '30%', sx: {color: 'white'}}}>
-          <SearchIcon size="small" color='white' />
+        <Box color='white' sx={{display: 'flex', alignItems: 'center', width: '30%', sx: {color: 'white'}}}>
+          <SearchIcon size="small" style={{fill: 'white'}} />
           <TextField
             label="Search for users"
             variant="standard"

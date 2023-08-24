@@ -44,8 +44,6 @@ const Signup = ({logIn}) => {
       <Box
         sx={{
           color: 'rgb(255, 63, 63)',
-          bgcolor: 'rgb(255, 239, 239)',
-          border: '1px solid rgb(255, 63, 63)',
           width: '100%',
           borderRadius: '10px',
           textAlign: 'center'

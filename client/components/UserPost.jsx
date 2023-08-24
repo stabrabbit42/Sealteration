@@ -1,19 +1,32 @@
-import React from 'react';
-import { Container } from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import { Container, Divider, Button } from '@mui/material';
 
-const UserPost = (props) => {
+const UserPost = ({text, postId, displayName, inheritedLikes}) => {
   // const { title, content } = props;
-const like = async () => {
-   await fetch('http://localhost:3000/accounts/like', {
-    method: 'PUT',
-    headers: {'Content-Type': 'application/json'},
-    body: {
-      "postId": 
-    }
+  const [likes, updateLikes] = useState(0)
 
-   })
-}
-  // potential other features that might need this to be changed to a box include: comments and likes
+  useEffect(() => {
+    updateLikes(inheritedLikes);
+  }, []);
+  
+  const like = () => {
+    console.log(postId);
+    fetch('/accounts/like', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        postId: postId
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then(response => updateLikes(response))
+    .catch(err => console.log(err));
+  }
+    // potential other features that might need this to be changed to a box include: comments and likes
 
   return (
     <div id='post'>
@@ -31,12 +44,21 @@ const like = async () => {
           height: '100%',
           width: '100%',
           p: 2,
+          margin: '0',
         }}
       >
-        <h2> Title </h2>
-        <div id='content'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vulputate ut pharetra sit amet aliquam id diam maecenas. Cursus sit amet dictum sit amet justo. Elit pellentesque habitant morbi tristique senectus et netus.</div>
-        <button onClick={like} >Like</button>
-
+        <h3>{displayName}</h3>
+        <Divider /> 
+        <div id='content'>{text}</div>
+         <Button
+          variant="contained"
+          color="primary"
+          fullWidth={true}
+          sx={{ textTransform: 'none', width: '25%', marginLeft: 'auto'  }}
+          onClick={like} // Disable the button if no content
+          >
+         {likes}  Likes
+        </Button>
       </Container>
     </div>
   );

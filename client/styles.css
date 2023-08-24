@@ -50,6 +50,15 @@ body {
   gap: 2%;
 }
 
+#postbox {
+  flex-direction: column;
+  width: 25%;
+  height: 50%;
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+}
+
 #userPost {
   flex-direction: column;
   width: 25%;

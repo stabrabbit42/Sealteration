@@ -4,7 +4,7 @@ import NavBar from '../components/NavBar.jsx'
 // import usercontainer
 import UserContainer from './UserContainer.jsx'
 
-const MainContainer = ({profile, logIn, updateProfile}) => {
+const MainContainer = ({profile, logIn, updateProfile, content, updateContent}) => {
   
   // fetch('./accounts/info', {
   //   method: 'PUT',
@@ -25,7 +25,7 @@ const MainContainer = ({profile, logIn, updateProfile}) => {
   return (
     <div id="mainContainer">
       <NavBar logIn={logIn}/>
-      <UserContainer profile={profile} updateProfile={updateProfile}/>
+      <UserContainer profile={profile} updateProfile={updateProfile} content={content} updateContent={updateContent}/>
     </div>
   )
 }
