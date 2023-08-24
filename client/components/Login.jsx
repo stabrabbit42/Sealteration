@@ -32,7 +32,7 @@ const Login = ({ logIn, updateProfile}) => {
       })
       .then(response => {
         console.log(response);
-        const { age, display_name, education, interests, job, location } = response;
+        const { age, display_name, education, interests, job, location } = response.profile;
         updateProfile({
           age: age,
           display_name: display_name,

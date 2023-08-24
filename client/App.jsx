@@ -41,7 +41,8 @@ const App = () => {
     })
     .then(response => {
       console.log(response);
-      const { age, display_name, education, interests, job, location } = response;
+      logIn(true);
+      const { age, display_name, education, interests, job, location } = response.profile;
       updateProfile({
         age: age,
         display_name: display_name,
@@ -50,7 +51,8 @@ const App = () => {
         job: job,
         location: location,
       })
-      logIn(true);
+      // logIn does not get called after updateProfile
+      console.log(isLoggedIn);
       }
     )
     .catch((err) => console.log(err));

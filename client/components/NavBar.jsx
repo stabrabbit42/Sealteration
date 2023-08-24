@@ -8,6 +8,8 @@ const NavBar = (props) => {
   // handle logout
   const handleLogout = () => {
     logIn(false);
+    fetch('/accounts/signout')
+    .catch((err) => console.log(err));
   };
 
   return (
