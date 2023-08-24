@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, TextField, Button, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const Signup = (props) => {
-  const { logIn } = props;
+const Signup = ({logIn}) => {
   const navigate = useNavigate();
 
   const [email, updateEmail] = useState('');

@@ -3,16 +3,15 @@ import { useState } from 'react';
 import { Box, TextField, Button, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
-const Login = (props) => {
+const Login = ({ logIn, updateProfile}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [loginError, updateLoginError] = useState('');
 
-  const { logIn } = props;
   // handle login function
   const handleLogin = () => {
-    console.log(email, password);
+    //console.log(email, password);
     fetch('../accounts/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -23,7 +22,7 @@ const Login = (props) => {
     })
       // modify state (in APP) to set isLoggedIn to true
       .then((response) => {
-        console.log(response)
+        //console.log(response)
         if (response.ok) {
           logIn(true);
           return response.json();
@@ -33,6 +32,15 @@ const Login = (props) => {
       })
       .then(response => {
         console.log(response);
+        const { age, display_name, education, interests, job, location } = response;
+        updateProfile({
+          age: age,
+          display_name: display_name,
+          education: education,
+          interests: interests,
+          job: job,
+          location: location,
+        })
       })
       // errors
       .catch((err) => {

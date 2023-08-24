@@ -4,11 +4,11 @@ import UserDetails from '../components/UserDetails.jsx'
 // import postContainer
 import PostContainer from './PostContainer.jsx'
 
-const UserContainer = ({profile}) => {
+const UserContainer = ({profile, updateProfile}) => {
 
   return (
     <div id="userContainer">
-    <UserDetails profile = {profile}/>
+    <UserDetails profile = {profile} updateProfile={updateProfile}/>
     <PostContainer />
     </div>
   )
